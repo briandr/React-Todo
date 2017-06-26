@@ -1,1 +1,1 @@
-React Timer Application
+React Bolierplate Application

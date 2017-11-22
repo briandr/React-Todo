@@ -21,7 +21,7 @@ var TodoApp = React.createClass({
                     text: 'something something'
                 }, {
                     id: 4,
-                    text: 'item 4'
+                    text: 'replace drywall'
                 }
             ]
         };

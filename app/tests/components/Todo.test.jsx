@@ -4,22 +4,29 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var $ = require('jQuery');
 
-var TodoApp = require('TodoApp');
+var Todo = require('Todo');
 
-describe('TodoApp', () => {
+describe('Todo', () => {
     it('should exist', () => {
-        expect(TodoApp).toExist();
+        expect(Todo).toExist();
     });
 
-    it('should add todo to the todos state on handleAddTodo', () => {
-        var todoText = 'test text';
-        var todoApp = TestUtils.renderIntoDocument(<TodoApp/>);
+    it('should call onToggle prop with id on click', () => {
+        var todoData = {
+            id: 199,
+            text: 'Write todo.test.jsx text',
+            completed: true
+        };
+        var spy = expect.createSpy();
+        var todo = TestUtils.renderIntoDocument(<Todo {...todoData} onToggle={spy}/>);
 
-        todoApp.setState({todos:[]});
-        todoApp.handleAddTodo(todoText);
+        // simulate click event, pull out the variable
+        // write assertion that our todo was created with id of 199
+        var $el = $(ReactDOM.findDOMNode(todo));
 
-        expect(todoApp.state.todos[0].text).toBe(todoText);
+        TestUtils.Simulate.click($el[0]);
 
+        expect(spy).toHaveBeenCalledWith(199);
     });
     
 });

@@ -19,6 +19,8 @@ describe('TodoApp', () => {
         todoApp.handleAddTodo(todoText);
 
         expect(todoApp.state.todos[0].text).toBe(todoText);
+        
+        // Expect createdAt to be a number
 
     });
 
@@ -26,7 +28,9 @@ describe('TodoApp', () => {
         var todoData = {
             id: 11,
             text: 'Test features',
-            completed: false
+            completed: false,
+            createdAt: 0,
+            completedAt: undefined
         };
         var todoApp = TestUtils.renderIntoDocument(<TodoApp/>);
         todoApp.setState({todos: [todoData]});
@@ -40,6 +44,32 @@ describe('TodoApp', () => {
         // 3. check the completed value changed from false to true.
         expect(todoApp.state.todos[0].completed).toBe(true);
 
+        // Explect ComletedAt to be a number
+        expect(todoApp.state.todos[0].completedAt).toBeA('number');
+
+
     });
     
+
+    it('should toggle todo from completed to incomplete', () => {
+        var todoData = {
+            id: 11,
+            text: 'Test features',
+            completed: true,
+            createdAt: 0,
+            completedAt: 1515701565
+        };
+        var todoApp = TestUtils.renderIntoDocument(<TodoApp/>);
+        todoApp.setState({todos: [todoData]});
+
+        expect(todoApp.state.todos[0].completed).toBe(true);
+        
+        todoApp.handleToggle(11);
+
+        expect(todoApp.state.todos[0].completed).toBe(false);
+        expect(todoApp.state.todos[0].completedAt).toNotExist();
+
+
+    });
+
 });
